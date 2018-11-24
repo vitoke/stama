@@ -1,6 +1,6 @@
 {
   "name": "stama",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An asynchronous and flexible state manager",
   "module": "src/lib/index.js",
   "main": "dist/stama.node.js",
