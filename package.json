@@ -1,0 +1,30 @@
+{
+  "name": "stama",
+  "version": "1.0.0",
+  "description": "An asynchronous and flexible state manager",
+  "module": "src/lib/index.js",
+  "main": "dist/stama.node.js",
+  "browser": "dist/stama.js",
+  "author": "Arvid Nicolaas",
+  "license": "MIT",
+  "private": false,
+  "repository": "https://github.com",
+  "scripts": {
+    "test": "jest",
+    "build": "rm -rf dist && npx webpack"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "jest": "^23.6.0",
+    "prettier": "^1.15.2",
+    "rxjs": "^6.3.3",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
