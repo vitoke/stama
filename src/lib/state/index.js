@@ -31,7 +31,7 @@ export class State {
     }
   }
 
-  async modState(updater, callback) {
+  #updateState = (updater, f, callback) => {
     if (updater === null) {
       if (callback) callback();
       return;
@@ -39,24 +39,18 @@ export class State {
 
     const deriveProps = this.constructor.deriveProps || this.deriveProps;
     const oldState = this.state;
-    const newState = modifyState(oldState, updater, deriveProps);
+    const newState = f(oldState, updater, deriveProps);
     this.#stateSubject.next(newState);
     if (callback) callback(newState);
     this.stateDidChange(newState, oldState);
+  };
+
+  modState(updater, callback) {
+    this.#updateState(updater, modifyState, callback);
   }
 
-  async setState(updater, callback) {
-    if (updater === null) {
-      if (callback) callback();
-      return;
-    }
-
-    const deriveProps = this.constructor.deriveProps || this.deriveProps;
-    const oldState = this.state;
-    const newState = setState(oldState, updater, deriveProps);
-    this.#stateSubject.next(newState);
-    if (callback) callback(newState);
-    this.stateDidChange(newState, oldState);
+  setState(updater, callback) {
+    this.#updateState(updater, setState, callback);
   }
 
   stateDidChange(newState, oldState) {}

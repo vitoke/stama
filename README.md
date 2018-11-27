@@ -1,6 +1,6 @@
 # Stama JS
 
-An asynchronous and flexible state manager/machine.
+A simple and flexible state manager/machine.
 
 ## Installation
 
@@ -42,7 +42,7 @@ class DataState extends State {
 
   static deriveProps(state) {
     let totalValue = 0;
-    state.items.forEach(item => totalValue += item.value;
+    state.items.forEach(item => totalValue += item.value);
     return { totalValue };
   }
 
@@ -90,6 +90,12 @@ If the initial state of the subclass doesn't depend on any inputs, it's easiest 
 static property on the class. The `State` class will set its initial state to this value,
 potentially with derived props if specified.
 
+```
+class SimpleState {
+  static initState = { someValue: 1 }
+}
+```
+
 #### `[static] deriveProps(state)`
 
 If any properties need to be derived from the state, it is possible to define a static or instance
@@ -133,6 +139,8 @@ Returns an RxJS Observable emitting every new state.
 #### `.subscribe(onNext, [onError], [onComplete])`
 
 Convenience method for `.stateStream.subscribe(...)`
+At the moment it will never call onError or onComplete. This may change
+in the future if there are use cases for it.
 
 #### `setState(updater, [callback])` (Promise)
 
@@ -169,6 +177,8 @@ class ExampleState extends State {
   addBarToValue = () => this.modState({ value: (v, state) => v + state.foo.bar })
   
   addBarToOther = () => this.modState({ foo: { other: (v, _, foo) => v + foo.bar } })
+  
+  setOtherToZero = () => this.modState({ foo: { other: 0 } })
   
   changeAll = () => this.modState({
     value: (v, state) => v + state.foo.bar,

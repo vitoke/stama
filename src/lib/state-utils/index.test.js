@@ -1,7 +1,7 @@
 import { modifyState, createProps } from './index';
 
 describe('State Utils: modifyState', () => {
-  test('empty state', async () => {
+  test('empty state', () => {
     const initState = {};
 
     const result1 = modifyState(initState, {});
@@ -13,7 +13,7 @@ describe('State Utils: modifyState', () => {
     expect(result3).toEqual(initState);
   });
 
-  test('no state change', async () => {
+  test('no state change', () => {
     const initState = { value: 1 };
 
     const result1 = modifyState(initState, {});
@@ -25,7 +25,7 @@ describe('State Utils: modifyState', () => {
     expect(result3).toEqual(initState);
   });
 
-  test('simple state change', async () => {
+  test('simple state change', () => {
     const initState = { value: 1, test: false };
 
     const result1 = modifyState(initState, { value: 10 });
@@ -37,7 +37,7 @@ describe('State Utils: modifyState', () => {
     expect(result2).toEqual(expectedState);
   });
 
-  test('modify state', async () => {
+  test('modify state', () => {
     const initState = { value: 1, test: false };
 
     const result1 = modifyState(initState, ({ value }) => ({
@@ -51,7 +51,7 @@ describe('State Utils: modifyState', () => {
     expect(result2).toEqual(expectedState);
   });
 
-  test('nested set', async () => {
+  test('nested set', () => {
     const initState = { value: 1, nested: { test: false } };
 
     const result1 = modifyState(initState, () => ({
@@ -65,7 +65,7 @@ describe('State Utils: modifyState', () => {
     expect(result2).toEqual(expectedState);
   });
 
-  test('nested modify', async () => {
+  test('nested modify', () => {
     const initState = { value: 1, nested: { test: false, foo: 1 } };
 
     const result1 = modifyState(initState, ({ nested }) => ({
@@ -79,7 +79,7 @@ describe('State Utils: modifyState', () => {
     expect(result2).toEqual(expectedState);
   });
 
-  test('no side-effects', async () => {
+  test('no side-effects', () => {
     const initState = { value: 1, nested: { test: false, foo: 1 } };
 
     modifyState(initState, ({ nested }) => ({
@@ -93,7 +93,7 @@ describe('State Utils: modifyState', () => {
     expect(initState.nested.foo).toBe(1);
   });
 
-  test('use full state in local update', async () => {
+  test('use full state in local update', () => {
     const initState = { value: 1, other: 10 };
 
     const result = modifyState(initState, {
@@ -105,7 +105,7 @@ describe('State Utils: modifyState', () => {
     expect(result).toEqual(expectedState);
   });
 
-  test('use full old state and partial old state in nested update', async () => {
+  test('use full old state and partial old state in nested update', () => {
     const initState = { value: 1, nested: { test: 5, total: 10 } };
 
     const result = modifyState(initState, {
@@ -118,7 +118,7 @@ describe('State Utils: modifyState', () => {
     expect(result).toEqual(expectedState);
   });
 
-  test('simple derive', async () => {
+  test('simple derive', () => {
     const initState = { value: 1 };
 
     const result = modifyState(initState, null, ({ value }) => ({
@@ -130,7 +130,7 @@ describe('State Utils: modifyState', () => {
     expect(result).toEqual(expectedState);
   });
 
-  test('does not process objects or classes', async () => {
+  test('does not process objects or classes', () => {
     const initState = { value: 1 };
 
     class Test {
@@ -147,20 +147,20 @@ describe('State Utils: modifyState', () => {
 });
 
 describe('State Utils: createProps', () => {
-  test('no creator fails', async () => {
+  test('no creator fails', () => {
     try {
       createProps();
       expect(true).toBe(false);
     } catch (e) {}
   });
 
-  test('empty creator', async () => {
+  test('empty creator', () => {
     const result = createProps({});
 
     expect(result).toEqual({});
   });
 
-  test('static creator', async () => {
+  test('static creator', () => {
     const result = createProps({ test: 1 });
 
     const expectedProps = { test: 1 };
@@ -168,7 +168,7 @@ describe('State Utils: createProps', () => {
     expect(result).toEqual(expectedProps);
   });
 
-  test('dynamic creator', async () => {
+  test('dynamic creator', () => {
     const result = createProps(() => ({ test: 1 }));
 
     const expectedProps = { test: 1 };
@@ -176,7 +176,7 @@ describe('State Utils: createProps', () => {
     expect(result).toEqual(expectedProps);
   });
 
-  test('dynamic creator with args', async () => {
+  test('dynamic creator with args', () => {
     const result = createProps((a, b) => ({ test: a + b }), [1, 2]);
 
     const expectedProps = { test: 3 };
@@ -184,7 +184,7 @@ describe('State Utils: createProps', () => {
     expect(result).toEqual(expectedProps);
   });
 
-  test('local creator with args', async () => {
+  test('local creator with args', () => {
     const result = createProps({ test: (a, b) => a + b }, [1, 2]);
 
     const expectedProps = { test: 3 };
@@ -192,7 +192,7 @@ describe('State Utils: createProps', () => {
     expect(result).toEqual(expectedProps);
   });
 
-  test('list creators', async () => {
+  test('list creators', () => {
     const result = createProps([{ value: 1 }, { test: true }]);
 
     const expectedProps = { value: 1, test: true };
@@ -200,7 +200,7 @@ describe('State Utils: createProps', () => {
     expect(result).toEqual(expectedProps);
   });
 
-  test('list creators with args', async () => {
+  test('list creators with args', () => {
     const result = createProps(
       [{ value: (a, b) => a + b }, (a, b) => ({ test: a + b })],
       [1, 2]
@@ -211,7 +211,7 @@ describe('State Utils: createProps', () => {
     expect(result).toEqual(expectedProps);
   });
 
-  test('stores nested functions', async () => {
+  test('stores nested functions', () => {
     const f = () => {};
 
     const result = createProps(() => ({ f }));
@@ -221,7 +221,7 @@ describe('State Utils: createProps', () => {
     expect(result).toEqual(expectedProps);
   });
 
-  test('will not directly store functions', async () => {
+  test('will not directly store functions', () => {
     const f = () => {};
 
     const result = createProps(f);
@@ -231,7 +231,7 @@ describe('State Utils: createProps', () => {
     expect(result).not.toEqual(expectedProps);
   });
 
-  test('will not process class-based objects', async () => {
+  test('will not process class-based objects', () => {
     class Test {
       value = () => 1;
     }
