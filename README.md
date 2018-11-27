@@ -47,9 +47,9 @@ class DataState extends State {
   }
 
   loadData = async url => {
-    await this.setState({ loading: true });
+    this.setState({ loading: true });
     const data = await fetch(url);
-    return this.setState({ loading: false, data })
+    this.setState({ loading: false, data })
   }
 }
 
