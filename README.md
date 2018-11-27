@@ -142,16 +142,16 @@ Convenience method for `.stateStream.subscribe(...)`
 At the moment it will never call onError or onComplete. This may change
 in the future if there are use cases for it.
 
-#### `setState(updater, [callback])` (Promise)
+#### `setState(updater, [callback])`
 
 Updates the current state according to the updater, and then calls the callback function.
 The updater can be an object describing the new state, which then will be directly set.
 Or, it can be an update function taking the current state and returning a new one.
 
-`setState` returns a Promise that resolves once the state has been updated,
+`setState` returns once the state has been updated,
 the callback has been called, and the `stateDidChange` method has been called.
 
-#### `modState(updater, [callback])` (Promise)
+#### `modState(updater, [callback])`
 
 Modifies the current state according to the updater, and then calls the callback function.
 The updater can be an object describing how the state should be modified.
@@ -190,7 +190,7 @@ class ExampleState extends State {
 }
 ```
 
-`modState` returns a Promise that resolves once the state has been updated,
+`modState` returns once the state has been updated,
 the callback has been called, and the `stateDidChange` method has been called.
 
 #### `stateDidChange(newState, oldState)`
